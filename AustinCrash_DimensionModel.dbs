@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="AustinCrashes" database="LogicalDesign" id="LogicalDesign-1e61" >
+	<schema name="AustinCrashes" >
+		<table name="Dim_Calendar" prior="Entity" >
+			<column name="Date_ID" type="INT" jt="4" mandatory="y" />
+			<column name="crash_date" type="DATE" jt="91" />
+			<column name="crash_year" type="INT" jt="4" />
+			<column name="crash_month" type="INT" jt="4" />
+			<column name="crash_day" type="INT" jt="4" />
+			<column name="crash_hour" type="INT" jt="4" />
+			<column name="crash_weekofyear" type="INT" jt="4" />
+			<column name="crash_quarter" type="INT" jt="4" />
+			<column name="is_weekend" type="BOOLEAN" jt="-7" />
+			<column name="is_holiday" type="BOOLEAN" jt="-7" />
+			<index name="pk_Dim_Calendar" unique="PRIMARY_KEY" >
+				<column name="Date_ID" />
+			</index>
+		</table>
+		<table name="Dim_Location" prior="Entity" >
+			<column name="Location_ID" type="INT" jt="4" mandatory="y" />
+			<column name="primary_address" type="VARCHAR" length="50" jt="12" />
+			<column name="secondary_address" type="VARCHAR" length="50" jt="12" />
+			<column name="reported_block_number" type="VARCHAR" length="20" jt="12" />
+			<column name="reported_street_name" type="VARCHAR" length="50" jt="12" />
+			<column name="reported_street_suffix" type="VARCHAR" length="20" jt="12" />
+			<column name="reported_street_prefix" type="VARCHAR" length="20" jt="12" />
+			<column name="lattitude" type="DOUBLE" jt="8" />
+			<column name="longitude" type="DOUBLE" jt="8" />
+			<column name="point" type="DOUBLE" jt="8" />
+			<index name="pk_Dim_Location" unique="PRIMARY_KEY" >
+				<column name="Location_ID" />
+			</index>
+		</table>
+		<table name="Dim_TxDot" prior="Entity" >
+			<column name="TxDot_ID" type="INT" jt="4" mandatory="y" />
+			<column name="crash_on_txDot_Highway" type="BOOLEAN" jt="-7" />
+			<column name="crash_on_private_drive" type="BOOLEAN" jt="-7" />
+			<column name="construction_zone_crash" type="BOOLEAN" jt="-7" />
+			<index name="pk_Dim_TxDot" unique="PRIMARY_KEY" >
+				<column name="TxDot_ID" />
+			</index>
+		</table>
+		<table name="Fact_Crashes" prior="Entity" >
+			<column name="Crash_ID" prior="CrashID" type="INT" jt="4" mandatory="y" >
+				<comment><![CDATA[The unique identifying number for a crash.]]></comment>
+			</column>
+			<column name="total_injury_count" type="INT" jt="4" />
+			<column name="total_death_count" type="INT" jt="4" />
+			<column name="crash_speed_limit" type="INT" jt="4" />
+			<column name="suspected_serious_injuries_count" prior="suspected_serious_injuries" type="INT" jt="4" />
+			<column name="non_incapacitating_injuries_count" prior="non_incapacitating_injuries" type="INT" jt="4" />
+			<column name="possible_injury_count" type="INT" jt="4" />
+			<column name="non_injured_count" type="INT" jt="4" />
+			<column name="uknown_injury_count" type="INT" jt="4" />
+			<column name="motor_vehicle_death_count" type="INT" jt="4" />
+			<column name="motor_vehicle_serious_injury_count" type="INT" jt="4" />
+			<column name="bicycle_death_count" type="INT" jt="4" />
+			<column name="bicycle_serious_injury_count" type="INT" jt="4" />
+			<column name="pedestrian_death_count" type="INT" jt="4" />
+			<column name="pedestrian_serious_injury_count" type="INT" jt="4" />
+			<column name="motorcycle_death_count" type="INT" jt="4" />
+			<column name="motorcycle_serious_injury_count" type="INT" jt="4" />
+			<column name="micromobility_death_count" type="INT" jt="4" />
+			<column name="micromobility_serious_injury_count" type="INT" jt="4" />
+			<column name="other_death_count" type="INT" jt="4" />
+			<column name="other_serious_injury_count" type="INT" jt="4" />
+			<column name="est_comp_cost_crash_based" type="DOUBLE" jt="8" />
+			<column name="est_total_person_comp_cost" type="DOUBLE" jt="8" />
+			<column name="Date_ID" type="INT" jt="4" mandatory="y" />
+			<column name="TxDot_ID" type="INT" jt="4" mandatory="y" />
+			<column name="severity_ID" type="INT" jt="4" mandatory="y" />
+			<column name="Location_ID" type="INT" jt="4" mandatory="y" />
+			<index name="pk_Fact_Crashes" unique="PRIMARY_KEY" >
+				<column name="Crash_ID" />
+			</index>
+			<fk name="fk_Fact_Crashes_Dim_Calendar" to_schema="AustinCrashes" to_table="Dim_Calendar" type="NonIdentifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="Date_ID" pk="Date_ID" />
+			</fk>
+			<fk name="fk_Fact_Crashes_Dim_TxDot" to_schema="AustinCrashes" to_table="Dim_TxDot" type="NonIdentifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="TxDot_ID" pk="TxDot_ID" />
+			</fk>
+			<fk name="fk_Fact_Crashes_dim_severity" to_schema="AustinCrashes" to_table="dim_severity" type="NonIdentifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="severity_ID" pk="severity_ID" />
+			</fk>
+			<fk name="fk_Fact_Crashes_Dim_Location" to_schema="AustinCrashes" to_table="Dim_Location" type="NonIdentifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="Location_ID" pk="Location_ID" />
+			</fk>
+		</table>
+		<table name="dim_severity" prior="Entity" >
+			<column name="severity_ID" type="INT" jt="4" mandatory="y" />
+			<column name="crash_severity_id_level" type="INT" jt="4" />
+			<column name="fatal_crash_flag" type="BOOLEAN" jt="-7" />
+			<index name="pk_dim_severity" unique="PRIMARY_KEY" >
+				<column name="severity_ID" />
+			</index>
+		</table>
+	</schema>
+	<layout name="Default Diagram" id="Diagram-1ba3" show_relation="columns" >
+		<entity schema="AustinCrashes" name="Dim_Calendar" color="D2C1EE" x="76" y="304" />
+		<entity schema="AustinCrashes" name="Dim_Location" color="C2EEC1" x="817" y="285" />
+		<entity schema="AustinCrashes" name="Dim_TxDot" color="EEECC1" x="57" y="57" />
+		<entity schema="AustinCrashes" name="Fact_Crashes" color="C1D8EE" x="380" y="57" />
+		<entity schema="AustinCrashes" name="dim_severity" color="EEC1C1" x="798" y="76" />
+	</layout>
+</project>
