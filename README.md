@@ -14,7 +14,7 @@ With the Austin Crash Database, my data warehouse project will attempt to fulfil
 
 •	To assist with finding the crash hotspots, the data warehouse will allow users to query crash data by location, so they can see roads with the highest crash frequency using the latitude and longitude location fields.
 
-•	To be able to filter and aggregate the data based on conditions such as time of day, vehicle type, weather conditions, and TxDOT highway usage to help fulfill the second business requirement of finding what influences crashes.
+•	To be able to filter and aggregate the data based on conditions such as time of day, vehicle type, and TxDOT highway usage to help fulfill the second business requirement of finding what influences crashes.
 
 •	To provide estimated crash costs over time and help users understand the financial impact of crashes over time and how it varies by year, or month. 
 
