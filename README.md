@@ -66,12 +66,16 @@ Overview: I will explain the data architecture for this project to illustrate ho
 ![starschema](https://github.com/user-attachments/assets/cd0948e7-06f9-4cd1-ad54-aebb57337f4a)
 
 **Fact table:**
+
 The crashes table, which contains all counts and costs for the crash dataset.
 
 **Dimension tables:**
 
 Dim_TxDot, which contains whether the crashes took place on a txDot highway, a private driveway, or a construction site.
+
 Dim_Severity, which denotes the crash severity level, from 0-5.
+
 Dim_Location, which is all the location data for the crashes.
+
 Dim_Calendar, which contains data for the crashes date, time, and whether the crashes took place on a holiday or weekend.
  
