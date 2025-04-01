@@ -1,4 +1,4 @@
-## Austin Crash Project:
+## Austin Crash Project
 
 ### **Business requirements:**
 
