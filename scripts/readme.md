@@ -1,10 +1,10 @@
-### Austin Traffic Crashes ETL Pipeline
+# Austin Traffic Crashes ETL Pipeline
 
 These scripts perform end-to-end extraction, transformation, and loading (ETL) of traffic crash data from the City of Austin Open Data Portal. My pipeline stages raw crash data in Azure Blob Storage and then processes and loads it into a Snowflake data warehouse using a star schema model.
 
 ## Files Overview
 
-# 1. extract_crashes.ipynb – Extraction & Upload
+### 1. extract_crashes.ipynb – Extraction & Upload
 
 Web scrapes crash records from Austin Open Data Portal.
 
@@ -12,7 +12,7 @@ Stores the data as a CSV in Azure Blob Storage under a container.
 
 Reads Azure credentials from config.json.
 
-# 2. etl_crashes.ipynb – ETL Process
+### 2. etl_crashes.ipynb – ETL Process
 
 Reads the cleaned data from Azure.
 
@@ -53,13 +53,13 @@ This file is used to connect to both Azure and Snowflake across the two notebook
 
 ## 🚀 How to Run
 
-# 1. Extraction Phase:
+### 1. Extraction Phase:
 
 Open extract_crashes.ipynb.
 
 Run all cells to extract, clean, and upload the raw crash data to Azure.
 
-# 2. ETL Phase
+### 2. ETL Phase
 
 Open etl_crashes.ipynb.
 
