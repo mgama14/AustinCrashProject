@@ -1,0 +1,57 @@
+Table,Column,Description
+FACT_CRASHES,CRASH_ID,Unique identifier for each crash record
+FACT_CRASHES,CRASH_SEV_ID,Severity ID associated with the crash (0-5 scale)
+FACT_CRASHES,Date_ID,Foreign key to the date dimension (yyyymmdd format)
+FACT_CRASHES,Location_ID,Foreign key to the location dimension
+FACT_CRASHES,TxDot_ID,Foreign key to the TxDot attributes dimension
+FACT_CRASHES,CRASH_SPEED_LIMIT,Posted speed limit where crash occurred
+FACT_CRASHES,DEATH_CNT,Total number of deaths in the crash
+FACT_CRASHES,TOT_INJRY_CNT,Total number of injuries in the crash
+FACT_CRASHES,SUS_SERIOUS_INJRY_CNT,Count of suspected serious injuries
+FACT_CRASHES,NONINCAP_INJRY_CNT,Count of non-incapacitating injuries
+FACT_CRASHES,POSS_INJRY_CNT,Count of possible injuries
+FACT_CRASHES,NON_INJURY_CNT,Count of people involved with no injury
+FACT_CRASHES,UNKN_INJRY_CNT,Count of unknown injury status cases
+FACT_CRASHES,MOTOR_VEHICLE_DEATH_COUNT,Number of motor vehicle-related deaths
+FACT_CRASHES,MOTOR_VEHICLE_SERIOUS_INJURY_COUNT,Number of serious injuries involving motor vehicles
+FACT_CRASHES,BICYCLE_DEATH_COUNT,Bicyclist deaths
+FACT_CRASHES,BICYCLE_SERIOUS_INJURY_COUNT,Bicyclist serious injuries
+FACT_CRASHES,PEDESTRIAN_DEATH_COUNT,Pedestrian deaths
+FACT_CRASHES,PEDESTRIAN_SERIOUS_INJURY_COUNT,Pedestrian serious injuries
+FACT_CRASHES,MOTORCYCLE_DEATH_COUNT,Motorcyclist deaths
+FACT_CRASHES,MOTORCYCLE_SERIOUS_INJURY_COUNT,Motorcyclist serious injuries
+FACT_CRASHES,MICROMOBILITY_DEATH_COUNT,"Micromobility-related deaths (e.g., e-scooters)"
+FACT_CRASHES,MICROMOBILITY_SERIOUS_INJURY_COUNT,Micromobility-related serious injuries
+FACT_CRASHES,OTHER_DEATH_COUNT,Other non-classified deaths in crash
+FACT_CRASHES,OTHER_SERIOUS_INJURY_COUNT,Other non-classified serious injuries
+FACT_CRASHES,EST_COMP_COST_CRASH_BASED,Estimated comprehensive crash cost (USD)
+FACT_CRASHES,EST_TOTAL_PERSON_COMP_COST,Estimated total personal compensation cost (USD)
+DIM_CALENDAR,Date_ID,Primary key for calendar (yyyymmdd)
+DIM_CALENDAR,CRASH_DATE,Date the crash occurred
+DIM_CALENDAR,CRASH_YEAR,Year of crash
+DIM_CALENDAR,CRASH_MONTH,Month of crash (1-12)
+DIM_CALENDAR,CRASH_DAY,Day of month of crash (1-31)
+DIM_CALENDAR,CRASH_HOUR,Hour of day 
+DIM_CALENDAR,CRASH_WEEKOFYEAR,ISO week number of crash
+DIM_CALENDAR,CRASH_QUARTER,Quarter of year (1-4)
+DIM_CALENDAR,IS_WEEKEND,True if crash occurred on a weekend
+DIM_CALENDAR,IS_HOLIDAY,True if crash occurred on a holiday
+DIM_CALENDAR,WEEKEND_LABEL,Weekend or Weekday label
+DIM_CALENDAR,HOLIDAY_LABEL,Holiday or Non-Holiday label
+DIM_CALENDAR,MONTH_LABEL,"Month name (e.g., January)"
+DIM_CALENDAR,TIME_OF_DAY,"Time of day label (Morning, Afternoon, Evening, Night)"
+DIM_LOCATION,Location_ID,Primary key for location dimension
+DIM_LOCATION,ADDRESS_PRIMARY,Primary crash address
+DIM_LOCATION,ADDRESS_SECONDARY,Secondary address (if available)
+DIM_LOCATION,RPT_BLOCK_NUM,Reported block number of crash
+DIM_LOCATION,RPT_STREET_NAME,Reported street name
+DIM_LOCATION,RPT_STREET_SFX,"Street suffix (e.g., Ave, Blvd)"
+DIM_LOCATION,LATITUDE,Latitude of crash location
+DIM_LOCATION,LONGITUDE,Longitude of crash location
+DIM_TXDOT,TxDot_ID,Primary key for TxDot attributes
+DIM_TXDOT,on_txDot_highway,True if crash occurred on a TxDOT highway
+DIM_TXDOT,CRASH_ON_PRIVATE_DRIVE,True if crash occurred on a private drive
+DIM_TXDOT,CONSTRUCTION_ZONE_CRASH,True if crash occurred in a construction zone
+DIM_SEVERITY,CRASH_SEV_ID,"Crash severity ID (0=Unknown, 5=Fatal)"
+DIM_SEVERITY,SEVERITY_LABEL,Descriptive severity label
+DIM_SEVERITY,CRASH_FATAL_FL,True if crash was fatal
