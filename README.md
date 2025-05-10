@@ -79,3 +79,18 @@ Dim_Location, which is all the location data for the crashes.
 
 Dim_Calendar, which contains data for the crashes date, time, and whether the crashes took place on a holiday or weekend.
  
+**Power BI Dashboard:**
+
+Includes the following visualizations to support insights gained from the data:
+
+Map Visual (crash severity across Austin by lat/long)
+
+Slicer for filtering by crash year and severity
+
+Pie Chart (distribution of crashes by severity)
+
+Column Chart (crashes by year)
+
+Line Chart (cost trends over time)
+
+Heat Map (crash count by weekday and time-of-day)
