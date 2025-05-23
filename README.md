@@ -72,6 +72,17 @@ A python ETL script is used afterward to perform the ETL, and loads the cleaned 
 
 After this step, the data is visualization ready and used to make a PowerBi dashboard.
 
+### The warehouse will be built following the Medallion Architecture model: 
+
+Bronze (Raw):
+The original Austin Traffic Crash dataset was downloaded as a CSV from the Austin Open Data Portal and stored in Azure Blob Storage. No cleaning was done at this stage—just raw crash records.
+
+Silver (Cleaned):
+In the etl_crashes.ipynb script, the raw data was cleaned, unnecessary columns were dropped, and relevant columns were renamed for clarity. This is where null values were handled and any columns not needed for the data model were removed.
+
+Gold (Star Schema):
+The cleaned data was then structured into a dimensional star schema with one fact table and four dimension tables.
+
 ### **Dimension modeling:**
 
 ![starschema](https://github.com/user-attachments/assets/cd0948e7-06f9-4cd1-ad54-aebb57337f4a)
@@ -90,7 +101,7 @@ Dim_Location, which is all the location data for the crashes.
 
 Dim_Calendar, which contains data for the crashes date, time, and whether the crashes took place on a holiday or weekend.
  
-**Power BI Dashboard:**
+### **Power BI Dashboard:**
 
 ![visualizations](https://github.com/user-attachments/assets/75717f89-5030-4b2c-bad6-38b6e04d7207)
 
@@ -107,3 +118,17 @@ Column Chart (crashes by year)
 Line Chart (cost trends over time)
 
 Heat Map (crash count by weekday and time-of-day)
+
+### **Insights and Conclusion:**
+
+The PowerBi dashboard created using the Crash warehouse made it easier to see how crash severity and cost trends play out across different years and times. Key takeaways were:
+
+• Fatal crashes make up the largest portion of total crash incident; I found this to be pretty surprising, and I think it highlights a major public safety issue in Austin.
+
+• Total crash costs seem generally pretty volatile, but predictably, there was a giant drop in costs around 2020. This makes perfect sense, seeing as how in general, there were a lot less people driving during the pandemic quarantine, likely leading to less crashes and reduced personal crash costs overall.
+
+• Nighttime weekday crashes have the highest associated costs. If I were to guess, it would be due to exhausted drivers commuting home from work. It makes sense that this demographic would have a large amount of crashes; they might be too fatigued to be as diligent as they need to be on the road.
+
+### **Conclusion:** 
+
+Overall, the project was a success. I was able to build a working data piipeline from raw data, create a warehouse from it, and import it into PowerBi to create a powerful and informative dashboard. All visualizations are based on the real-world crash data and modeled for potential decision making for city officials or urban planners. I think that this project is very powerful, and can be used effectively to help navigate resource allocation for Austin. Future work could involve potentially intergrating weather data, and adding filters for vehicle type to try and gain more context about what type of drivers tend to crash the most, and what type of crashes they tend to create.
