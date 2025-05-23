@@ -61,7 +61,7 @@ Overview: I will explain the data architecture for this project to illustrate ho
 
 **Data warehouse:** Finally, the data mart will be loaded into the final data warehouse. The project will only use one singular data mart, but I chose this approach for flexibility in expanding the project in the future. At this final stage, users can access the data warehouse and generate reports.
 
-###Technical Architecture
+### **Technical Architecture**
 
 ![Screenshot 2025-05-23 113254](https://github.com/user-attachments/assets/b0147fc8-58ef-419e-9a24-e5a91b8657ba)
 
