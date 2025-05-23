@@ -1,4 +1,4 @@
-## Austin Crash Project
+# Austin Crash Project
 
 ### **Business requirements:**
 
@@ -60,6 +60,18 @@ Overview: I will explain the data architecture for this project to illustrate ho
 **Data Mart:** The cleaned data will be structured into a star schema I have modeled in DbSchema, which will include a fact table for crashes and dimensions to help analyze the crashes meaningfully.
 
 **Data warehouse:** Finally, the data mart will be loaded into the final data warehouse. The project will only use one singular data mart, but I chose this approach for flexibility in expanding the project in the future. At this final stage, users can access the data warehouse and generate reports.
+
+###Technical Architecture
+
+![Screenshot 2025-05-23 113254](https://github.com/user-attachments/assets/b0147fc8-58ef-419e-9a24-e5a91b8657ba)
+
+The planned technical architecture flow of the project begins with the Austin Crash Database, where the data is extracted via a python extract script.
+
+The code stores the data straight into Microsoft Azure blob storage. 
+
+A python ETL script is used afterward to perform the ETL, and loads the cleaned processed data into a Snowflake data warehouse.
+
+After this step, the data is visualization ready and used to make a PowerBi dashboard.
 
 ### **Dimension modeling:**
 
