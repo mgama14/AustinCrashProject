@@ -1,4 +1,4 @@
-## Project Purpose and Scope
+## Austin Crash Project: Purpose and Scope
 
 This project was built around the Austin Crash Report dataset, with the goal of creating a full data warehouse pipeline that could actually support real-world decision-making for people like city officials or transportation planners trying to make the roads safer.
 
