@@ -95,7 +95,7 @@ This project uses a Medallion Architecture approach to keep each stage of the da
 
 ## Dimension Modeling
 
-To make the crash data easier to query and analyze, I modeled it into a classic star schema. This design allows the user to slice and filter the data across key categories.
+To make the crash data easier to query and analyze, I modeled it into a classic star schema using DbSchema. This design allows the user to slice and filter the data across key categories.
 
 ![Star Schema](https://github.com/user-attachments/assets/cd0948e7-06f9-4cd1-ad54-aebb57337f4a)
 
