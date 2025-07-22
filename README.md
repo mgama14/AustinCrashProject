@@ -1,134 +1,145 @@
-# Austin Crash Project
+## Project Purpose and Scope
 
-### **Business requirements:**
+This project was built around the Austin Crash Report dataset, with the goal of creating a full data warehouse pipeline that could actually support real-world decision-making for people like city officials or transportation planners trying to make the roads safer.
 
-With the Austin Crash Database, my data warehouse project will attempt to fulfill three specific major business requirements:
+I wanted to design something that didn't just store data, but helped answer meaningful, day-to-day questions for city officials.
 
-•	**First**, the proposed warehouse will be used to help analyze which areas in Austin have the most crashes. This can potentially help city officials decide where signage might need improvement, help decide what roads need design updates, and where there might need to be more law enforcement placed to help keep roads safe.
+### Business Objectives
 
-•	**Second**, the warehouse will be used to analyze patterns in crash severity and cost. Looking at things like which years had the most expensive crashes or which types of crashes are more common can help people understand what contributes to crashes and how to prevent them.
+My warehouse was developed to help answer questions like:
 
-•	**Finally**, the warehouse will be able to give users a simple way to see how serious crashes are overall, how they’ve changed over time, and how much they’ve cost the city overall. This could potentially help with things like planning budgets, setting safety goals, or making community reports.
+- **Where are the most dangerous roads in Austin?**  
+  This is useful for deciding where to place signage, redesign roadways, or increase enforcement.
 
-### **Functional requirements:**
+- **What patterns exist in crash severity and cost?**  
+  This is valuable insight into how crash types and financial impact shift over time.
 
-•	To assist with finding the crash hotspots, the data warehouse will allow users to query crash data by location, so they can see roads with the highest crash frequency using the latitude and longitude location fields.
+- **How have crash trends changed year to year?**  
+  This is helpful for tracking progress, budgeting, and public reporting.
 
-•	To be able to filter and aggregate the data based on conditions such as vehicle type TxDOT highway usage to help fulfill the second business requirement of finding what influences crashes.
+### Functional Goals
 
-•	To provide estimated crash costs over time and help users understand the financial impact of crashes over time and how it varies by year, or month. 
+To support those objectives, I made sure the system could:
 
-•	To be able to allow users to generate dashboards, create visualizations, and export reports on the filtered crash data, supporting visualization of trends over time and by location.
+- Filter and query crash data by location (using provided lat/long) to identify hotspots  
+- Break down crash patterns by vehicle type, highway status, and more  
+- Track total crash costs over time, whether by year, month, or custom filters  
+- Generate clear dashboards and reports for anyone who needs to visualize the data
 
-### **Data requirements:**
+### Data Source
 
-To achieve the business requirements for this project, I am using the [Austin Traffic Crash Report dataset](https://data.austintexas.gov/Transportation-and-Mobility/Austin-Crash-Report-Data-Crash-Level-Records/y2wy-tgr5/about_data), sourced from the Austin Open Data Portal.
-Each row in this dataset is an individual crash accident that occurred in Austin, Texas. The data dictionary is also included in the linked source, and a [copy CSV](https://github.com/mgama14/AustinCrashProject/blob/main/Data_Dictionary.xlsx) is available in the repository.
+I used the [Austin Traffic Crash Report dataset](https://data.austintexas.gov/Transportation-and-Mobility/Austin-Crash-Report-Data-Crash-Level-Records/y2wy-tgr5/about_data), which is publicly available through the City of Austin’s Open Data Portal.
 
-### **Information Architecture:**
+Each row represents an individual crash that happened within Austin, including info like severity level, date, time, roadway type, and context like whether it happened on a highway or private property.
 
-**Overview:** For this project, the information architecture will begin with the data gathered from the Austin Crash Report dataset and will move through the logical stages before being stored in the final data warehouse. Hypothetical users like city officials trying to determine optimal areas for road improvements will be able interact with the data warehouse via query and create visualizations to help with any location/time-based analysis. The flow of this is outlined in the diagram below.
+- A full data dictionary is available on the portal.  
+- A [local Excel copy](https://github.com/mgama14/AustinCrashProject/blob/main/documents/Data_Dictionary.xlsx) is also included in this repository for easy access.
 
- ![informationarch](https://github.com/user-attachments/assets/66834e0b-7e2f-47fb-be42-712382abdeab)
+---
 
-**Source:** The raw data is all sourced from the Austin Traffic Crash Report data set to begin with.
+## Information Architecture
 
-**Gather:** The data then gathered from Austin’s portal in the form of a csv export. 
+The data moves through a structured pipeline, starting from raw extraction and ending in a fully modeled, query-ready warehouse. Hypothetical users like city planners or public safety analysts would be able to run queries and build dashboards to support location-based or time-based decisions.
 
-**Clean:** The next step would be to remove data not entirely necessary for the business requirements and to remove those irrelevant fields (an example being the “is deleted/is temporary record” columns).
+_See the diagram I created below for a high-level overview of the process._
 
-**Reformat:** This will be where fields will be renamed for ease of use.
+![Information Architecture](https://github.com/user-attachments/assets/66834e0b-7e2f-47fb-be42-712382abdeab)
 
-**Transform:** Where new fields and columns will most likely be added, like columns that help calculate crash severities.
+- **Source**: Data comes from the Austin Traffic Crash Report dataset.
+- **Gather**: Exported as CSV files from the Austin Open Data Portal.
+- **Clean**: Dropped irrelevant fields (like temporary flags or deletion indicators) that weren’t useful for the project goals.
+- **Reformat**: Renamed columns for clarity and ease of use.
+- **Transform**: Created new columns (such as crash cost indicators) to support analysis.
+- **Load**: Cleaned and transformed data was loaded into Azure Blob Storage and modeled into a star schema.
+- **Warehouse Access**: End users can query and create dashboards from the final warehouse. The data is read-only at this stage.
 
-**Load:** The clean and transformed data will then be loaded into Azure blob storage and structured into the star schema.
+---
 
-**Data Warehouse:** Where the prepared data is available for the end users to have read-only access to dashboards and reports to help with their needs. The hypothetical end users will not be able to directly modify any of the data after it is stored in the warehouse. 
+## Data Architecture
 
-### **Data Architecture:**
-Overview: I will explain the data architecture for this project to illustrate how the data is collected and processed using the planned tools. The goal is to ensure my data remains organized and accessible at all stages of the project. At the current moment, there are no plans to use multiple datasets. The architecture will follow a bottom-up Kimball style flow, diagrammed below:
+This project follows a bottom-up Kimball-style design. The focus was on building a single, scalable data mart structured around crash incidents. I wanted the data to remain organized, flexible, and easy to extend in the future if additional datasets were added.
 
- ![data architecture](https://github.com/user-attachments/assets/d5eabf4d-c998-4b89-a790-1a6e25356227)
+![Data Architecture](https://github.com/user-attachments/assets/d5eabf4d-c998-4b89-a790-1a6e25356227)
 
-**Data Source:** As mentioned, the data comes from the Austin Open Data Portal and is downloaded as a CSV. 
+- **Data Source**: Downloaded from the [Austin Open Data Portal](https://data.austintexas.gov/).
+- **Data Storage**: CSV files stored in Azure Blob Storage as a staging layer.
+- **Cleaning & Transformation**: Standardized columns, dropped unnecessary fields, and handled nulls using Python and SQL.
+- **Data Mart**: Modeled into a star schema with one fact table and four dimension tables using DbSchema.
+- **Data Warehouse**: Final warehouse is hosted in Snowflake and supports analysis and reporting.
 
-**Data Storage:** Once the CSV is exported and downloaded, it will be stored in Microsoft Azure blob storage as the staging location. The raw data will be preserved here.
+---
 
-**Cleaning/Transforming:** As mentioned before, this is where unnecessary columns will be dropped and everything will be standardized. This step will be down using python and SQL.
+## Technical Architecture
 
-**Data Mart:** The cleaned data will be structured into a star schema I have modeled in DbSchema, which will include a fact table for crashes and dimensions to help analyze the crashes meaningfully.
+The technical side of this project follows a basic ETL flow using Python, cloud storage, and Snowflake. Once the cleaned data is ready, it feeds directly into Power BI for visualization.
 
-**Data warehouse:** Finally, the data mart will be loaded into the final data warehouse. The project will only use one singular data mart, but I chose this approach for flexibility in expanding the project in the future. At this final stage, users can access the data warehouse and generate reports.
+![Technical Architecture](https://github.com/user-attachments/assets/bbb0281d-7a1c-44e9-ac62-fcd52a01edba)
 
-### **Technical Architecture**
+- Data was extracted using a custom Python script.
+- Raw crash records were uploaded directly to Azure Blob Storage.
+- A Python-based ETL process handled cleaning, transformation, and schema modeling.
+- Final output was loaded into a Snowflake data warehouse.
+- Power BI was used to build an interactive dashboard based on the modeled data.
 
-![1](https://github.com/user-attachments/assets/bbb0281d-7a1c-44e9-ac62-fcd52a01edba)
+---
 
-The planned technical architecture flow of the project begins with the Austin Crash Database, where the data is extracted via a python extract script.
+## Medallion Architecture: Bronze, Silver, Gold Layers
 
-The code stores the data straight into Microsoft Azure blob storage. 
+This project uses a Medallion Architecture approach to keep each stage of the data lifecycle clean and traceable:
 
-A python ETL script is used afterward to perform the ETL, and loads the cleaned processed data into a Snowflake data warehouse.
+- **Bronze (Raw)**: Raw Austin crash data stored as-is in Azure Blob Storage.
+- **Silver (Cleaned)**: Data was cleaned using Python in `etl_crashes.ipynb`, where nulls were handled, columns were renamed, and unnecessary fields were removed.
+- **Gold (Star Schema)**: Final version modeled into a dimensional star schema with one fact table and four supporting dimensions.
 
-After this step, the data is visualization ready and used to make a PowerBi dashboard.
+---
 
-### The warehouse will be built following the Medallion Architecture model: 
+## Dimension Modeling
 
-Bronze (Raw):
-The original Austin Traffic Crash dataset was downloaded as a CSV from the Austin Open Data Portal and stored in Azure Blob Storage. No cleaning was done at this stage—just raw crash records.
+To make the crash data easier to query and analyze, I modeled it into a classic star schema. This design allows the user to slice and filter the data across key categories.
 
-Silver (Cleaned):
-In the etl_crashes.ipynb script, the raw data was cleaned, unnecessary columns were dropped, and relevant columns were renamed for clarity. This is where null values were handled and any columns not needed for the data model were removed.
+![Star Schema](https://github.com/user-attachments/assets/cd0948e7-06f9-4cd1-ad54-aebb57337f4a)
 
-Gold (Star Schema):
-The cleaned data was then structured into a dimensional star schema with one fact table and four dimension tables.
+**Fact Table:**
+- `Fact_Crashes`: Contains crash counts, cost estimates, and key event metrics.
 
-### **Dimension modeling:**
+**Dimension Tables:**
+- `Dim_TxDot`: Indicates whether the crash occurred on a TxDOT highway, private driveway, or construction site.
+- `Dim_Severity`: Crash severity, coded from 0 to 5.
+- `Dim_Location`: Latitude, longitude, and road location details.
+- `Dim_Calendar`: Date, time, and whether the crash occurred on a weekend or holiday.
 
-![starschema](https://github.com/user-attachments/assets/cd0948e7-06f9-4cd1-ad54-aebb57337f4a)
+---
 
-**Fact table:**
+## Power BI Dashboard
 
-The crashes table, which contains all counts and costs for the crash dataset.
+To showcase insights from the warehouse, I created a Power BI dashboard. It allows users to filter crashes by year and severity, explore time-based patterns, and identify problem areas across Austin.
 
-**Dimension tables:**
+![Dashboard Visualizations](https://github.com/user-attachments/assets/75717f89-5030-4b2c-bad6-38b6e04d7207)
 
-Dim_TxDot, which contains whether the crashes took place on a txDot highway, a private driveway, or a construction site.
+The dashboard includes:
+- A map of crash severity by location (latitude and longitude)
+- Slicers for filtering by crash year and severity
+- A pie chart showing crash severity distribution
+- A column chart of crashes per year
+- A line chart for total crash costs over time
+- A heat map of crash counts by weekday and time of day
 
-Dim_Severity, which denotes the crash severity level, from 0-5.
+---
 
-Dim_Location, which is all the location data for the crashes.
+## Key Insights
 
-Dim_Calendar, which contains data for the crashes date, time, and whether the crashes took place on a holiday or weekend.
- 
-### **Power BI Dashboard:**
+A few patterns stood out during the analysis:
 
-![visualizations](https://github.com/user-attachments/assets/75717f89-5030-4b2c-bad6-38b6e04d7207)
+- **Fatal crashes made up a large portion of total incidents**; I found this to be pretty surprising, and I think it highlights a major public safety issue in Austin.
+- **Total crash costs seem generally pretty volatile, but predictably, there was a giant drop in costs around 2020**; this makes perfect sense, seeing as how in general, there were a lot less people driving during the pandemic quarantine, likely leading to less crashes and reduced personal crash costs overall.
+- **Weekday crashes at night had the highest cost impact**, I concluded this was due to exhausted drivers commuting home from work. It makes sense that this demographic would have a large amount of crashes; they might be too fatigued to be as diligent as they need to be on the road.
+---
 
-Includes the following visualizations to support insights gained from the data:
+## Final Thoughts
 
-Map Visual (crash severity across Austin by lat/long)
+Overall, the project was a success. I was able to build a working data piipeline from raw data, create a warehouse from it, and import it into PowerBi to create a powerful and informative dashboard. All visualizations are based on the real-world crash data and modeled for potential decision making for city officials or urban planners. I think that this project is very powerful, and can be used effectively to help navigate resource allocation for Austin.
 
-Slicer for filtering by crash year and severity
-
-Pie Chart (distribution of crashes by severity)
-
-Column Chart (crashes by year)
-
-Line Chart (cost trends over time)
-
-Heat Map (crash count by weekday and time-of-day)
-
-### **Insights and Conclusion:**
-
-The PowerBi dashboard created using the Crash warehouse made it easier to see how crash severity and cost trends play out across different years and times. Key takeaways were:
-
-• Fatal crashes make up the largest portion of total crash incident; I found this to be pretty surprising, and I think it highlights a major public safety issue in Austin.
-
-• Total crash costs seem generally pretty volatile, but predictably, there was a giant drop in costs around 2020. This makes perfect sense, seeing as how in general, there were a lot less people driving during the pandemic quarantine, likely leading to less crashes and reduced personal crash costs overall.
-
-• Nighttime weekday crashes have the highest associated costs. If I were to guess, it would be due to exhausted drivers commuting home from work. It makes sense that this demographic would have a large amount of crashes; they might be too fatigued to be as diligent as they need to be on the road.
-
-### **Conclusion:** 
-
-Overall, the project was a success. I was able to build a working data piipeline from raw data, create a warehouse from it, and import it into PowerBi to create a powerful and informative dashboard. All visualizations are based on the real-world crash data and modeled for potential decision making for city officials or urban planners. I think that this project is very powerful, and can be used effectively to help navigate resource allocation for Austin. Future work could involve potentially intergrating weather data, and adding filters for vehicle type to try and gain more context about what type of drivers tend to crash the most, and what type of crashes they tend to create.
+If I continue this project, I’d love to:
+- Add weather data to provide more context
+- Filter by vehicle type to study who’s most at risk
+- Expand the schema to include external datasets and multi-year comparisons
