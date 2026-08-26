@@ -2,7 +2,7 @@
 
 This project was built around the Austin Crash Report dataset, with the goal of creating a full data warehouse pipeline that could actually support real-world decision-making for people like city officials or transportation planners trying to make the roads safer.
 
-I wanted to design something that didn't just store data, but helped answer meaningful, day-to-day questions for city officials.
+I wanted to design something with the ability to answer meaningful, day-to-day questions for that could help improve real world issues!
 
 ### Business Objectives
 
@@ -137,7 +137,7 @@ A few patterns stood out during the analysis:
 
 ## Final Thoughts
 
-Overall, the project was a success. I was able to build a working data piipeline from raw data, create a warehouse from it, and import it into PowerBi to create a powerful and informative dashboard. All visualizations are based on the real-world crash data and modeled for potential decision making for city officials or urban planners. I think that this project is very powerful, and can be used effectively to help navigate resource allocation for Austin.
+Overall, the project was a success. I was able to build a working data pipeline from raw data, create a warehouse from it, and import it into Power Bi to create a powerful and informative dashboard. All visualizations are based on the real-world crash data and modeled for potential decision making for city officials or urban planners. I think that this project is very powerful, and can be used effectively to help navigate resource allocation for Austin.
 
 If I continue this project, I’d love to:
 - Add weather data to provide more context
